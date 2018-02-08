@@ -15,6 +15,12 @@ public class ListenerService {
     private Socket conn;
     private ExecutorService threadPool = Executors.newFixedThreadPool(2000); // so server can server up to 2000 bots simultaneously
 
+    public static void die(){
+        try{
+            System.exit(-2);
+        }
+        catch (Exception ex){}
+    }
     ListenerService(){ // so these will be default ports
         listenPort = 3333;
         controlPort = 3330;
@@ -40,6 +46,7 @@ public class ListenerService {
         catch (java.io.IOException ex) {
             System.out.println(ex);
         }
+
 
     }
     private void execThread(Socket c) { //method executes thread for every connection, except command
