@@ -3,14 +3,13 @@ package lunarlight.lunarProto;
 import lunarlight.ListenerService;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import java.io.Writer;
 import java.net.Socket;
 
 public class cmdInterface {
-    private String data;
     private Socket conn;
     private String authData[] = new String[2];
     private BufferedReader in;
@@ -42,8 +41,27 @@ public class cmdInterface {
                     out.flush();
                     str = in.readLine();
                     switch(str) {
+                        case "help":
+                            out.write("#################################################\r\n"+
+                                    "shutdown  -  to shutdown lunarlight server\r\n"+
+                                    "set cmd   -  to set command which will be sent for clients\r\n"+
+                                    "get cmd   -  to examine current command for clients\r\n"+
+                                    "exit      -  to close this connection\r\n"+
+                                    "help      -  to print this list again\r\n\r\n");
+                            out.flush();
+                            break;
+                        case "set cmd":
+                            out.write("New command for clients: ");
+                            out.flush();
+                            client.setBroadcastCmd(trimNewline(in.readLine()));
+                            break;
+                        case "get cmd":
+                            out.write("Current command for clients is '" + client.getBroadcastCmd()+"'\r\n");
+                            out.flush();
+                            break;
                         case "shutdown":
                             this.shutdown();
+                            break;
 
                         case "exit":
                             this.conn.close();
@@ -52,6 +70,7 @@ public class cmdInterface {
                         default :
                             out.write("Doing nothing\r\n");
                             out.flush();
+                            break;
                     }
 
 
@@ -68,8 +87,7 @@ public class cmdInterface {
         this.out = new OutputStreamWriter(conn.getOutputStream());
         out.write("###Lunar Light authentication###\n" + "Login: "); //rn will accept plain text, later  upgrade to hash
         out.flush();
-        this.in = new BufferedReader(
-                new InputStreamReader(conn.getInputStream()));
+        this.in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         if(in.readLine().equals(authData[0])){ // works fine when connecting via putty telnet
             out.write("Password: ");
             out.flush();

@@ -13,13 +13,15 @@ public class ListenerService {
     private int listenPort; // will listen for "bots"
     private int controlPort; // here we can setup our server at runtime
     private Socket conn;
-    private ExecutorService threadPool = Executors.newFixedThreadPool(2000); // so server can server up to 2000 bots simultaneously
+    private ExecutorService threadPool = Executors.newFixedThreadPool(2000); // so server can serve up to 2000 bots simultaneously
 
     public static void die(){
         try{
             System.exit(-2);
         }
-        catch (Exception ex){}
+        catch (Exception ex){
+            //
+        }
     }
     ListenerService(){ // so these will be default ports
         listenPort = 3333;
@@ -33,6 +35,9 @@ public class ListenerService {
 
     public void init(){
         try {
+            //connecting to db
+            lldb db = new lldb();
+            db.connect();
             ServerSocket ListenSock = new ServerSocket(this.listenPort);
             //ServerSocket controlSock = new ServerSocket(this.controlPort);
             cmdConnThread cmdConn = new cmdConnThread(new ServerSocket(this.controlPort));// we cant rly DDOS that

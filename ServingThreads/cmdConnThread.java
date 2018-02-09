@@ -6,8 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class cmdConnThread extends Thread{
-    ServerSocket socket;
-    Socket setupClient;
+    private ServerSocket socket;
+    private Socket setupClient;
 
     public cmdConnThread(ServerSocket srvSock){
         this.socket = srvSock;
@@ -22,8 +22,7 @@ public class cmdConnThread extends Thread{
           }
       }
       catch(java.io.IOException ex){
-          System.out.println("Something bad happened with control port\n" +
-                  "Shutting down....");
+          System.out.println("Something bad happened with control port\n" + "Shutting down....");
       }
       finally {
           if(socket!=null){

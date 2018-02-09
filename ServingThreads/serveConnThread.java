@@ -1,5 +1,7 @@
 package lunarlight.ServingThreads;
 
+import lunarlight.lunarProto.client;
+
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -17,10 +19,11 @@ public class serveConnThread implements Callable<Void>{ //In constructor we pass
         try {
             conn.setTcpNoDelay(true);
             conn.setSoTimeout(150000);
-            OutputStream out = this.conn.getOutputStream();
-            OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
-            writer.write("Work in progress"+"\n");
-            writer.flush();
+            client curClient = new client(conn);
+            //OutputStream out = this.conn.getOutputStream();
+            //OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+            //writer.write("Work in progress"+"\n");
+            //writer.flush();
         }
         catch(java.io.IOException ex){
             System.out.println(ex);
@@ -31,7 +34,7 @@ public class serveConnThread implements Callable<Void>{ //In constructor we pass
                     conn.close();
                 }
                 catch (java.io.IOException ex){
-                    System.out.println("For some reason i cant close the connection");
+                    System.out.println("For some reason i cant close the client connection");
                 }
             }
         }
