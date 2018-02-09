@@ -28,7 +28,8 @@ public class client {
             String data = in.readLine();
             if(data.equals("R")){
                 System.out.println("Registering new client \""+conn.getRemoteSocketAddress().toString()+"\"");
-                lldb.registerClient(conn.getRemoteSocketAddress().toString()); //other calculations such as id, time and key
+                int id = lldb.registerClient(conn.getRemoteSocketAddress().toString()); //other calculations such as id, time and key
+                out.write(Encryption.genClientKey(id).toString());
                 //will be done in another class
             }
 

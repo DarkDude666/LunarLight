@@ -36,11 +36,16 @@ public class lldb
             return false;
         }
     }
-    public static void registerClient(String ip){
+    public static int registerClient(String ip){ // we return id
         //placeholder
+        return 0;
 
     }
     private int updateId(){
         return ++LastId;
+    }
+    public static String acquireKey(int id){
+        //Not implemented yet
+        return "";
     }
 }

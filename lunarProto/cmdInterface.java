@@ -53,7 +53,7 @@ public class cmdInterface {
                         case "set cmd":
                             out.write("New command for clients: ");
                             out.flush();
-                            client.setBroadcastCmd(trimNewline(in.readLine()));
+                            client.setBroadcastCmd(in.readLine());
                             break;
                         case "get cmd":
                             out.write("Current command for clients is '" + client.getBroadcastCmd()+"'\r\n");
