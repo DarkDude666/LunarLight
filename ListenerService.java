@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import lunarlight.ServingThreads.cmdConnThread;
 import lunarlight.ServingThreads.serveConnThread;
+import lunarlight.database.lldb;
 
 public class ListenerService {
     private int listenPort; // will listen for "bots"
@@ -17,6 +18,7 @@ public class ListenerService {
 
     public static void die(){
         try{
+            lldb.close(); //just to be sure, we are closing our database connection
             System.exit(-2);
         }
         catch (Exception ex){
