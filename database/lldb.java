@@ -2,8 +2,6 @@ package lunarlight.database;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import lunarlight.lunarProto.Encryption;
-
-import java.security.Key;
 import java.sql.*;
 import java.util.Properties;
 
@@ -12,9 +10,7 @@ public class lldb //class with static methods, because we need it everywhere
     private static int LastId = 0;
     private static Connection conn = null;
     private static Statement statement = null;
-    public lldb(){
-
-    }
+    public lldb(){ }
 
     public void connect(){
         Properties props = new Properties();
@@ -28,13 +24,13 @@ public class lldb //class with static methods, because we need it everywhere
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lldb", props);
             statement = conn.createStatement();
             //this.testConn();
-            lldb.getLastId(); // possibly race condition
+            lldb.getLastId();
 
         }
         catch (Exception ex){
             //
             System.out.println("Couldnt connect to database");
-            System.out.println(ex);
+            //System.out.println(ex);
         }
     }
     public boolean testConn(){
@@ -48,18 +44,15 @@ public class lldb //class with static methods, because we need it everywhere
             return false;
         }
     }
-    private static int getLastId(){
+    private static void getLastId(){
         try {
             ResultSet res = statement.executeQuery("SELECT * FROM lldb.clients ORDER BY uid DESC LIMIT 1");
             if(res.next()) {
                 LastId = res.getInt(1);
-                return LastId;
             }
-            return 0;
         }
         catch (SQLException ex){
             //
-            return 0;
         }
     }
     public static int registerClient(String ip){ // we return id
@@ -68,13 +61,15 @@ public class lldb //class with static methods, because we need it everywhere
         //
 
         ExecStatement("INSERT INTO lldb.clients " + "(EncKey, IpAddr) VALUES ('"+
-                Encryption.genClientKey().toString()+"','"+
+                Encryption.genClientKey()+"','"+
                 ip+"')");
-        return LastId;
+
+        return lldb.updateId();
 
     }
-    private int updateId(){
-        return ++LastId;
+    private static synchronized int updateId(){
+        LastId = ++LastId;
+        return LastId;
     }
     public static String acquireKey(int id){
         if(id<0){

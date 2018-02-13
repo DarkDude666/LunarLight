@@ -41,6 +41,7 @@ public class client {
                         return;
                     }
                     catch (Exception ex){
+                        return;
                         //
                     }
                 }
