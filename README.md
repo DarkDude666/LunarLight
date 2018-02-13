@@ -6,7 +6,7 @@ Protocol is strict, it means that if wrong data supplied, server will just drop 
 ![LLP](llproto.PNG)
 
 ## Clients
-Each client is being assigned with unique id, and aes 128bit key.<br>
+Each client is being assigned with unique id and aes 128bit key.<br>
 Key is different for every client, however it's possible to get the same key.<br>
 Clients should connect to server's port 3333
 
