@@ -78,7 +78,7 @@ public class lldb //class with static methods, because we need it everywhere
         try{
         ResultSet res = statement.executeQuery("SELECT EncKey FROM lldb.clients WHERE UID ="+id);
             if(res.next()){
-                return  res.getString(2);
+                return  res.getString("EncKey");
 
             }
             else{

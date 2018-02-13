@@ -17,7 +17,9 @@ public class Encryption {
             Cipher c = Cipher.getInstance(ALGO);
             c.init(Cipher.ENCRYPT_MODE, key);
             byte[] encVal = c.doFinal(cmd.getBytes());
-            return encVal.toString();
+            //String encStr = new String(encVal);
+
+            return Base64.getEncoder().encodeToString(encVal);
         }
         catch (Exception ex){
             //
@@ -27,7 +29,6 @@ public class Encryption {
     public static String genClientKey(){
         try {
             SecretKey secretKey = KeyGenerator.getInstance("AES").generateKey();
-
             String encodedKey = Base64.getEncoder().encodeToString(secretKey.getEncoded());
             return encodedKey;
 

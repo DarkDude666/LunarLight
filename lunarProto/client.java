@@ -11,7 +11,7 @@ import java.security.Key;
 
 public class client {
     private static String broadcastCmd = "";
-    private static final int  CLSIZE = 10; // size of client's packet in chars
+    private static final int  CLSIZE = 10; // MAX size of client's packet
     private Socket conn;
     private BufferedReader in;
     private OutputStreamWriter out;
@@ -27,7 +27,7 @@ public class client {
         }
     }
     private void acquireData(){
-        char[] data = new char[100]; //actually more than enough
+        char[] data = new char[11]; //actually more than enough
         //String data ="";
         try {
             int bytesRead = in.read(data);
@@ -45,14 +45,14 @@ public class client {
                         //
                     }
                 }
-                out.write(id+":"+Encryption.genClientKey());//then we tell him his UID and Encryption key encoded in base64
+                out.write(id+":"+lldb.acquireKey(id));//then we tell him his UID and Encryption key encoded in base64
                 out.flush();
                 conn.close();
             }
             else if(bytesRead<=CLSIZE){//means client is registered, and sending us his unique ID
                 //if the length is higher, then we again dont care and wont procedure that.
                 String strId = new String(data);
-                int id = Integer.parseInt(strId);
+                int id = Integer.parseInt(strId.trim());
                 String strKey = lldb.acquireKey(id);
                 if(strKey==null){
                     conn.close();//ERROR!!! no such id
@@ -71,7 +71,7 @@ public class client {
 
         }
         catch (Exception ex){
-
+            System.out.println("Error while processing client");
         }
 
     }
