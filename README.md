@@ -2,7 +2,7 @@
 
 ## Protocol
 
-Protocol is strict, it means that if wrong data supplied, server will just drop the connection.<br>
+Protocol is strict, it means that if wrong data supplied, server will just drop the connection.<br><br>
 ![LLP](llproto.PNG)
 
 ## Clients
@@ -29,7 +29,7 @@ where 52 is UID and the rest is key
 
 When client sends his unique id, server does this:
 1. Querying database for key, where id is which client sent.
-2. If there are no such id, server just drops the connection
+2. If there is no entry with such id, server just drops the connection
 3. Else if there is an entry with such id, server grabs it's encryption key.
 4. Server encrypts current command with key from database, decoding it from base64 in advance
 5. Then server just sends the encrypted command.
