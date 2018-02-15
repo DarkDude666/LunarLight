@@ -18,6 +18,7 @@ public class cmdConnThread extends Thread{
       try{
           while(true){
               setupClient = socket.accept();
+              setupClient.setSoTimeout(60*1000);//timeout for setup socket will be one minute
               cmdInterface cmdint = new cmdInterface(setupClient);
           }
       }

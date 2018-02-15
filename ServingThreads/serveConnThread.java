@@ -16,7 +16,6 @@ public class serveConnThread implements Callable<Void>{ //In constructor we pass
     public Void call(){//right now we just send basic string
         try {
             conn.setTcpNoDelay(true);
-            conn.setSoTimeout(150000);
             client curClient = new client(conn);
             //OutputStream out = this.conn.getOutputStream();
             //OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");

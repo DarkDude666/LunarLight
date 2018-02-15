@@ -17,7 +17,9 @@ public class client {
     private OutputStreamWriter out;
     public client(Socket conn){
         this.conn=conn;
+
         try {
+            this.conn.setSoTimeout(10*1000); // timeout for client will be ten seconds, so we wont hang
             this.out = new OutputStreamWriter(conn.getOutputStream());
             this.in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             this.acquireData();
