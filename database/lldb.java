@@ -1,6 +1,7 @@
 package lunarlight.database;
 
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import lunarlight.ListenerService;
 import lunarlight.lunarProto.Encryption;
 import java.sql.*;
 import java.util.Properties;
@@ -10,18 +11,27 @@ public class lldb //class with static methods, because we need it everywhere
     private static int LastId = 0;
     private static Connection conn = null;
     private static Statement statement = null;
-    public lldb(){ }
+    private String dbPort;
+    private String user;
+    private String password;
+    private String host;
+    public lldb(String dbPort, String user, String password, String host){
+        this.dbPort = dbPort;
+        this.user = user;
+        this.password = password;
+        this.host = host;
+    }
 
     public void connect(){
         Properties props = new Properties();
 
-        props.put("user","lunarlight"); //later will add config file
-        props.put("password","lunarlight");
+        props.put("user",user); //later will add config file
+        props.put("password",password);
         props.put("useSSL","false");
         try {
             Driver jdbc = new FabricMySQLDriver();
             DriverManager.registerDriver(jdbc);
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lldb", props);
+            conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+dbPort+"/lldb", props);
             statement = conn.createStatement();
             //this.testConn();
             lldb.getLastId();
@@ -30,6 +40,7 @@ public class lldb //class with static methods, because we need it everywhere
         catch (Exception ex){
             //
             System.out.println("Couldnt connect to database");
+            ListenerService.die();
             //System.out.println(ex);
         }
     }
@@ -71,7 +82,7 @@ public class lldb //class with static methods, because we need it everywhere
         LastId = ++LastId;
         return LastId;
     }
-    public static String acquireKey(int id){
+    public static synchronized String acquireKey(int id){
         if(id<0){
             return null;
         }

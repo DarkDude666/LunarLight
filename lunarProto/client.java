@@ -8,6 +8,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.Timer;
+
 
 public class client {
     private static String broadcastCmd = "";
@@ -32,10 +35,11 @@ public class client {
         char[] data = new char[11]; //actually more than enough
         //String data ="";
         try {
+            Date now = new Date();
             int bytesRead = in.read(data);
             if(data[0]==('R')){ //client can send only 'R' or int id, so we dont care what's after first item in arr
                 String remoteAddr = conn.getInetAddress().toString().substring(1);
-                System.out.println("Registering new client \""+remoteAddr+"\""); //just cutting the slash
+                System.out.println(now.toString()+" Registering new client \""+remoteAddr+"\""); //just cutting the slash
                 int id = lldb.registerClient(remoteAddr);
                 if(id == -1){
                     try {
@@ -73,6 +77,8 @@ public class client {
 
         }
         catch (Exception ex){
+            ex.printStackTrace();
+            System.out.println(ex);
             System.out.println("Error while processing client");
         }
 

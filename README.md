@@ -5,6 +5,21 @@
 Protocol is strict, it means that if wrong data supplied, server will just drop the connection.<br><br>
 ![LLP](llproto.PNG)
 
+##Arguments
+You <b>must</b> supply one of the arguments<br>
+`--install` or `-i` to initialize database structure<br>
+`-c <pathtocfg>` to supply config file<br>
+
+##Config File
+Base config file structure:<br>
+`CLIENTPORT=3333` port number for bots<br>
+ `COMMNDPORT=4440` port for server setup<br>
+ `THREADS=1000` number of threads, that server should serve simultaneously<br>
+ `DBPORT=3306` database port<br>
+ `DBUSER=lunarlight` database username<br>
+ `DBPASS=lunarlight` database password<br>
+    `DBHOST=localhost` host where database engine is running<br>
+
 ## Clients
 Each client is being assigned with unique id and aes 128bit key.<br>
 Key is different for every client, however it's possible to get the same key.<br>

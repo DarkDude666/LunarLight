@@ -39,7 +39,7 @@ public class cmdInterface {
                 while(true){
                     out.write("Command: ");
                     out.flush();
-                    str = in.readLine();
+                    str = in.readLine().trim();
                     switch(str) {
                         case "help":
                             out.write("#################################################\r\n"+
