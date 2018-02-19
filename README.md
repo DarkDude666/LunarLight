@@ -1,16 +1,18 @@
 # Lunar Light
 
+[showcase](https://youtu.be/wR-dfwmnezg)
+
 ## Protocol
 
 Protocol is strict, it means that if wrong data supplied, server will just drop the connection.<br><br>
 ![LLP](llproto.PNG)
 
-##Arguments
+## Arguments
 You <b>must</b> supply one of the arguments<br>
 `--install` or `-i` to initialize database structure<br>
 `-c <pathtocfg>` to supply config file<br>
 
-##Config File
+## Config File
 Base config file structure:<br>
 `CLIENTPORT=3333` port number for bots<br>
  `COMMNDPORT=4440` port for server setup<br>
